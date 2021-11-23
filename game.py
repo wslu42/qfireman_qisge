@@ -68,4 +68,4 @@ def next_frame(input):
 
     if (4 in input['key_presses']):
         drop = not drop
-        qisge.print(drop)W
+        qisge.print(drop)
