@@ -63,17 +63,11 @@ images = qisge.ImageList([
     'brick.png',
     ])
 
-pos_x, pos_y = 1, 0
 qubitN = 3
-hit,hittemp = 0,0
 
 enemy_list = [[qisge.Sprite(100,x=1,y=14,z=0),qisge.Sprite(100,x=7,y=14,z=0)] for i in range(1000)]
 enemy_count = 0
 
-paddle = qisge.Sprite(0,x=pos_x,y=pos_y,z=0)
-paddle.size = 2.5
-
-drop = False        
 #####################################################
 # refresh game frames and get inputs 
 
@@ -84,16 +78,6 @@ def next_frame(input):
     global paddle,enemy_list
     global drop,enemy_count,hit,hittemp
         
-    if (0 in input['key_presses']) and (pos_y<16-1):
-        pos_y += 1
-    if (1 in input['key_presses']) and (pos_x<8):
-        pos_x += 1
-    if (2 in input['key_presses']) and (pos_y>0):
-        pos_y -= 1
-    if (3 in input['key_presses']) and (pos_x>1):
-        pos_x -= 1
-
-    paddle.x, paddle.y = pos_x, pos_y
 
     if (5 in input['key_presses']): #"x"
         myqc = QuantumCircuit(qubitN,qubitN)
@@ -124,18 +108,9 @@ def next_frame(input):
         enemy_count+=1
 
     for i in range(enemy_count):
-        hittemp = 0
         for j in range(2):
             enemy_list[i][j].y -= 0.2
-            if enemy_list[i][j].x == pos_x and int(enemy_list[i][j].y) == pos_y:
-                hittemp += 1
-        hit += int(hittemp/10)
-    qisge.print('hit= '+str(hit))
 
-
-    if (4 in input['key_presses']):
-        drop = not drop
-        qisge.print(drop)
 ```
 ![image](https://user-images.githubusercontent.com/29524895/143313980-8a4919fd-0fc5-42f8-8afc-70164a863113.gif)
 
